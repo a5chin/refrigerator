@@ -8,23 +8,11 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - ./backend:/go/src/heysay
+      - ./backend:/go/src/ref
     command: "bash -c 'sh build.sh'"
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      TZ: Asia/Tokyo
-
-  frontend:
-    image: node:16.14.2
-    working_dir: /home/node/heysay
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/home/node/heysay
-      - /home/node/heysay/node_modules
-    command: "bash -c 'npm i && npm run dev'"
     environment:
       TZ: Asia/Tokyo
   db:
@@ -44,4 +32,4 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=heysay
+      - MYSQL_DATABASE=ref
