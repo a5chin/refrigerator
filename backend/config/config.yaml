@@ -1,0 +1,11 @@
+hostname: "127.0.0.1"
+port: 9000
+db:
+  hostname: "db"
+  port: 3306
+  name: "ref"
+  username: "root"
+  password: ""
+cors:
+  allow:
+    origin: "http://localhost:3000"
