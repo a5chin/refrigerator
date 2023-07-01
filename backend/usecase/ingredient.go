@@ -13,6 +13,6 @@ func NewIngredientUseCase(repogitory IngredientRepogitory) *IngredientUseCase {
 	return &IngredientUseCase{repogitory}
 }
 
-func (u IngredientUseCase) GetIngredients(ctx context.Context) ([]*entity.Ingredient, error) {
-	return u.IngredientRepogitory.GetIngredients(ctx)
+func (u IngredientUseCase) GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error) {
+	return u.IngredientRepogitory.GetIngredients(ctx, min, max)
 }

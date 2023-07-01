@@ -8,5 +8,5 @@ import (
 )
 
 type IngredientUseCase interface {
-	GetIngredients(ctx context.Context) ([]*entity.Ingredient, error)
+	GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error)
 }
