@@ -10,3 +10,7 @@ import (
 type IngredientUseCase interface {
 	GetIngredients(ctx context.Context) ([]*entity.Ingredient, error)
 }
+
+type ComponentUseCase interface {
+	GetComponents(ctx context.Context) ([]*entity.Component, error)
+}

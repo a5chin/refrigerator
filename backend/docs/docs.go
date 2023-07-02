@@ -16,6 +16,40 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/components": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Component"
+                ],
+                "summary": "全栄養素取得 API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetComponentsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/ingredients": {
             "get": {
                 "consumes": [
@@ -52,6 +86,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.GetComponentsResponse": {
+            "type": "object",
+            "properties": {
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Component"
+                    }
+                }
+            }
+        },
         "controller.GetIngredientsResponse": {
             "type": "object",
             "properties": {
@@ -60,6 +105,17 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/entity.Ingredient"
                     }
+                }
+            }
+        },
+        "entity.Component": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         },

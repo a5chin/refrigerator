@@ -10,3 +10,7 @@ import (
 type IngredientRepogitory interface {
 	GetIngredients(ctx context.Context) ([]*entity.Ingredient, error)
 }
+
+type ComponentRepogitory interface {
+	GetComponents(ctx context.Context) ([]*entity.Component, error)
+}

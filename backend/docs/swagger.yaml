@@ -1,10 +1,24 @@
 definitions:
+  controller.GetComponentsResponse:
+    properties:
+      components:
+        items:
+          $ref: '#/definitions/entity.Component'
+        type: array
+    type: object
   controller.GetIngredientsResponse:
     properties:
       ingredients:
         items:
           $ref: '#/definitions/entity.Ingredient'
         type: array
+    type: object
+  entity.Component:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
     type: object
   entity.ErrorResponse:
     properties:
@@ -24,6 +38,28 @@ info:
   title: ref
   version: "1.0"
 paths:
+  /components:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetComponentsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 全栄養素取得 API
+      tags:
+      - Component
   /ingredients:
     get:
       consumes:
