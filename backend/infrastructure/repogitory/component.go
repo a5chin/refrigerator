@@ -29,3 +29,12 @@ func (r ComponentRepogitory) GetComponents(ctx context.Context) ([]*entity.Compo
 	}
 	return components, nil
 }
+
+func (r ComponentRepogitory) GetComponentByID(ctx context.Context, componentId string) (*entity.Component, error) {
+	var record *model.Component
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.First(&record, "id = ?", componentId).Error; err != nil {
+		return nil, err
+	}
+	return record.ToEntity(), nil
+}

@@ -13,4 +13,5 @@ type IngredientUseCase interface {
 
 type ComponentUseCase interface {
 	GetComponents(ctx context.Context) ([]*entity.Component, error)
+	GetComponentByID(ctx context.Context, conponentId string) (*entity.Component, error)
 }

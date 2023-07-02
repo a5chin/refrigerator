@@ -16,3 +16,7 @@ func NewComponentUseCase(repogitory ComponentRepogitory) *ComponentUseCase {
 func (u ComponentUseCase) GetComponents(ctx context.Context) ([]*entity.Component, error) {
 	return u.ComponentRepogitory.GetComponents(ctx)
 }
+
+func (u ComponentUseCase) GetComponentByID(ctx context.Context, componentId string) (*entity.Component, error) {
+	return u.ComponentRepogitory.GetComponentByID(ctx, componentId)
+}

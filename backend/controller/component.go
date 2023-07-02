@@ -31,9 +31,34 @@ type GetComponentsResponse struct {
 // @Failure		404		{object}	entity.ErrorResponse
 // @Router		/components	[get]
 func (c ComponentController) GetComponents(ctx *gin.Context) (interface{}, error) {
-	Components, err := c.ComponentUseCase.GetComponents(ctx)
+	components, err := c.ComponentUseCase.GetComponents(ctx)
 	if err != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, err)
 	}
-	return GetComponentsResponse{Components: Components}, nil
+	return GetComponentsResponse{Components: components}, nil
+}
+
+type GetComponentResponse struct {
+	Component *entity.Component `json:"component"`
+}
+
+// GetComponentByID godoc
+//
+// @Summary	栄養素取得 API
+// @Description
+// @Tags		Component
+// @Accept		json
+// @Param		componentId	path		string	true			"栄養素 ID"
+// @Produce		json
+// @Success		200			{object}	GetComponentsResponse	"OK"
+// @Failure		401			{object}	entity.ErrorResponse
+// @Failure		404			{object}	entity.ErrorResponse
+// @Router		/components/{componentId}	[get]
+func (c ComponentController) GetComponentByID(ctx *gin.Context) (interface{}, error) {
+	componentId := ctx.Param("componentId")
+	component, err := c.ComponentUseCase.GetComponentByID(ctx, componentId)
+	if err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	return GetComponentResponse{Component: component}, nil
 }

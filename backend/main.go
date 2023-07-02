@@ -51,6 +51,7 @@ func main() {
 
 	componentRouter := api.Group("/components")
 	componentRouter.GET("/", handleResponse(componentController.GetComponents))
+	componentRouter.GET("/:componentId", handleResponse(componentController.GetComponentByID))
 
 	runApp(app, conf)
 }
