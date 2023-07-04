@@ -10,7 +10,7 @@ import (
 	"ref/entity"
 	"ref/infrastructure/driver"
 	"ref/infrastructure/middleware"
-	"ref/infrastructure/repogitory"
+	"ref/infrastructure/repository"
 	"ref/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -27,14 +27,14 @@ func main() {
 	db := driver.NewDB(conf)
 	tokenDriver := driver.NewTokenDriver(conf)
 
-	ingredientRepogitory := repogitory.NewIngredientRepogitory(tokenDriver)
-	componentRepogitory := repogitory.NewComponentRepogitory(tokenDriver)
+	ingredientRepository := repository.NewIngredientRepository(tokenDriver)
+	nutritionRepository := repository.NewNutritionRepository(tokenDriver)
 
-	ingredientUseCase := usecase.NewIngredientUseCase(ingredientRepogitory)
-	componentUseCase := usecase.NewComponentUseCase(componentRepogitory)
+	ingredientUseCase := usecase.NewIngredientUseCase(ingredientRepository)
+	nutritionUseCase := usecase.NewNutritionUseCase(nutritionRepository)
 
 	ingredientController := controller.NewIngredientController(ingredientUseCase)
-	componentController := controller.NewComponentController(componentUseCase)
+	nutritionController := controller.NewNutritionController(nutritionUseCase)
 
 	// Setup webserver
 	app := gin.Default()
@@ -49,9 +49,9 @@ func main() {
 	ingredientRouter := api.Group("/ingredients")
 	ingredientRouter.GET("/", handleResponse(ingredientController.GetIngredients))
 
-	componentRouter := api.Group("/components")
-	componentRouter.GET("/", handleResponse(componentController.GetComponents))
-	componentRouter.GET("/:componentId", handleResponse(componentController.GetComponentByID))
+	nutritionRouter := api.Group("/nutritions")
+	nutritionRouter.GET("/", handleResponse(nutritionController.GetNutritions))
+	nutritionRouter.GET("/:nutritionId", handleResponse(nutritionController.GetNutritionByID))
 
 	runApp(app, conf)
 }

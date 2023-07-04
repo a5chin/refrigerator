@@ -7,11 +7,11 @@ import (
 	"ref/entity"
 )
 
-type IngredientRepogitory interface {
+type IngredientRepository interface {
 	GetIngredients(ctx context.Context) ([]*entity.Ingredient, error)
 }
 
-type ComponentRepogitory interface {
-	GetComponents(ctx context.Context) ([]*entity.Component, error)
-	GetComponentByID(ctx context.Context, conponentId string) (*entity.Component, error)
+type NutritionRepository interface {
+	GetNutritions(ctx context.Context) ([]*entity.Nutrition, error)
+	GetNutritionByID(ctx context.Context, nutritionId string) (*entity.Nutrition, error)
 }

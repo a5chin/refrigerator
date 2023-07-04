@@ -6,13 +6,13 @@ import (
 )
 
 type IngredientUseCase struct {
-	IngredientRepogitory
+	IngredientRepository
 }
 
-func NewIngredientUseCase(repogitory IngredientRepogitory) *IngredientUseCase {
-	return &IngredientUseCase{repogitory}
+func NewIngredientUseCase(repository IngredientRepository) *IngredientUseCase {
+	return &IngredientUseCase{repository}
 }
 
 func (u IngredientUseCase) GetIngredients(ctx context.Context) ([]*entity.Ingredient, error) {
-	return u.IngredientRepogitory.GetIngredients(ctx)
+	return u.IngredientRepository.GetIngredients(ctx)
 }

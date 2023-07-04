@@ -1,6 +1,6 @@
 package entity
 
-type Component struct {
+type Nutrition struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 }

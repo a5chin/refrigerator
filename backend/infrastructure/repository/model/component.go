@@ -4,13 +4,13 @@ import (
 	"ref/entity"
 )
 
-type Component struct {
+type Nutrition struct {
 	ID   string
 	Name string
 }
 
-func (m Component) ToEntity() *entity.Component {
-	return &entity.Component{
+func (m Nutrition) ToEntity() *entity.Nutrition {
+	return &entity.Nutrition{
 		ID:   m.ID,
 		Name: m.Name,
 	}

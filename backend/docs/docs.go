@@ -16,83 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/components": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Component"
-                ],
-                "summary": "全栄養素取得 API",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.GetComponentsResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/entity.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/entity.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/components/{componentId}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Component"
-                ],
-                "summary": "栄養素取得 API",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "栄養素 ID",
-                        "name": "componentId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.GetComponentsResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/entity.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/entity.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/ingredients": {
             "get": {
                 "consumes": [
@@ -126,20 +49,86 @@ const docTemplate = `{
                     }
                 }
             }
-        }
-    },
-    "definitions": {
-        "controller.GetComponentsResponse": {
-            "type": "object",
-            "properties": {
-                "components": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/entity.Component"
+        },
+        "/nutritions": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Nutrition"
+                ],
+                "summary": "全栄養素取得 API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetNutritionsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
                     }
                 }
             }
         },
+        "/nutritions/{nutritionId}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Nutrition"
+                ],
+                "summary": "栄養素取得 API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "栄養素 ID",
+                        "name": "nutritionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetNutritionsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
         "controller.GetIngredientsResponse": {
             "type": "object",
             "properties": {
@@ -151,14 +140,14 @@ const docTemplate = `{
                 }
             }
         },
-        "entity.Component": {
+        "controller.GetNutritionsResponse": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
+                "nutritions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Nutrition"
+                    }
                 }
             }
         },
@@ -171,6 +160,17 @@ const docTemplate = `{
             }
         },
         "entity.Ingredient": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Nutrition": {
             "type": "object",
             "properties": {
                 "id": {
