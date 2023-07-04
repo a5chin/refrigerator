@@ -17,9 +17,15 @@ func NewIngredientRepository(tokenDriver *driver.TokenDriver) *IngredientReposit
 	return &IngredientRepository{tokenDriver}
 }
 
-func (r IngredientRepository) GetIngredients(ctx context.Context) ([]*entity.Ingredient, error) {
+func (r IngredientRepository) GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error) {
 	records := []*model.Ingredient{}
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if min != nil {
+		db = db.Where(fmt.Sprintf("weight >= %d", *min))
+	}
+	if max != nil {
+		db = db.Where(fmt.Sprintf("weight <= %d", *max))
+	}
 	if err := db.Find(&records).Error; err != nil {
 		return nil, err
 	}

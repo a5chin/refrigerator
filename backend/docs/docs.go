@@ -28,6 +28,20 @@ const docTemplate = `{
                     "Ingredient"
                 ],
                 "summary": "全素材取得 API",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "min",
+                        "name": "min",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "max",
+                        "name": "max",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -167,6 +181,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "weight": {
+                    "type": "integer"
                 }
             }
         },
