@@ -7,6 +7,6 @@ import (
 	"ref/entity"
 )
 
-type IngredientRepogitory interface {
-	GetIngredients(ctx context.Context) ([]*entity.Ingredient, error)
+type IngredientRepository interface {
+	GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error)
 }
