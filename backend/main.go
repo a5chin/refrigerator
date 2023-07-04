@@ -28,10 +28,13 @@ func main() {
 	tokenDriver := driver.NewTokenDriver(conf)
 
 	ingredientRepository := repository.NewIngredientRepository(tokenDriver)
+	nutritionRepository := repository.NewNutritionRepository(tokenDriver)
 
 	ingredientUseCase := usecase.NewIngredientUseCase(ingredientRepository)
+	nutritionUseCase := usecase.NewNutritionUseCase(nutritionRepository)
 
 	ingredientController := controller.NewIngredientController(ingredientUseCase)
+	nutritionController := controller.NewNutritionController(nutritionUseCase)
 
 	// Setup webserver
 	app := gin.Default()
@@ -45,6 +48,10 @@ func main() {
 
 	ingredientRouter := api.Group("/ingredients")
 	ingredientRouter.GET("/", handleResponse(ingredientController.GetIngredients))
+
+	nutritionRouter := api.Group("/nutritions")
+	nutritionRouter.GET("/", handleResponse(nutritionController.GetNutritions))
+	nutritionRouter.GET("/:nutritionId", handleResponse(nutritionController.GetNutritionByID))
 
 	runApp(app, conf)
 }

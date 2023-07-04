@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS ingredients(
   deleted_at DATETIME     NULL
 );
 
-CREATE TABLE IF NOT EXISTS components(
+CREATE TABLE IF NOT EXISTS nutritions(
   id         VARCHAR(26) PRIMARY KEY,
   name       VARCHAR(40) NOT NULL
 );
