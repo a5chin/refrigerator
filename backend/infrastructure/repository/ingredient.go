@@ -1,24 +1,24 @@
-package repogitory
+package repository
 
 import (
 	"context"
 	"fmt"
 	"ref/entity"
 	"ref/infrastructure/driver"
-	"ref/infrastructure/repogitory/model"
+	"ref/infrastructure/repository/model"
 
 	"gorm.io/gorm"
 )
 
-type IngredientRepogitory struct {
+type IngredientRepository struct {
 	*driver.TokenDriver
 }
 
-func NewIngredientRepogitory(tokenDriver *driver.TokenDriver) *IngredientRepogitory {
-	return &IngredientRepogitory{tokenDriver}
+func NewIngredientRepository(tokenDriver *driver.TokenDriver) *IngredientRepository {
+	return &IngredientRepository{tokenDriver}
 }
 
-func (r IngredientRepogitory) GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error) {
+func (r IngredientRepository) GetIngredients(ctx context.Context, min, max *uint) ([]*entity.Ingredient, error) {
 	records := []*model.Ingredient{}
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	if min != nil {

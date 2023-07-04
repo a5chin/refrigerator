@@ -10,7 +10,7 @@ import (
 	"ref/entity"
 	"ref/infrastructure/driver"
 	"ref/infrastructure/middleware"
-	"ref/infrastructure/repogitory"
+	"ref/infrastructure/repository"
 	"ref/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -27,9 +27,9 @@ func main() {
 	db := driver.NewDB(conf)
 	tokenDriver := driver.NewTokenDriver(conf)
 
-	IngredientRepogitory := repogitory.NewIngredientRepogitory(tokenDriver)
+	IngredientRepository := repository.NewIngredientRepository(tokenDriver)
 
-	IngredientUseCase := usecase.NewIngredientUseCase(IngredientRepogitory)
+	IngredientUseCase := usecase.NewIngredientUseCase(IngredientRepository)
 
 	IngredientController := controller.NewIngredientController(IngredientUseCase)
 
