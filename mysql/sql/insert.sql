@@ -44,4 +44,4 @@ INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('01TKZ7D
 INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('01MC0J7C0RPBZ43Z1DKS9Y2VP2', '01H0F7PC2AXHE7DRHPKV8Y4SZC');
 INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('010Z1A6KTHKY3W4SG5H44FSJRC', '01H3M89JAPWVJYPMSKQYDXNPRX');
 INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('01NHS58FDTTYKRX2N33ZSEF4KH', '01H3M89JAPWVJYPMSKQYDXNPRX');
-INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('010Z1A6KTHKY3W4SG5H44FSJRC', '01H3M84GCPQWTACHPE77WTJ20Y');
+INSERT INTO ingredient_nutritions (ingredient_id, nutrition_id) VALUES ('01YDWT0MD9XJ5KZG9BF24MC57K', '01H3M84GCPQWTACHPE77WTJ20Y');
