@@ -14,3 +14,8 @@ CREATE TABLE IF NOT EXISTS nutritions(
   id         VARCHAR(26) PRIMARY KEY,
   name       VARCHAR(40) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS ingredient_nutritions(
+  ingredient_id VARCHAR(26) NOT NULL,
+  nutrition_id  VARCHAR(26) NOT NULL
+);
