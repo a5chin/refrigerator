@@ -1,7 +1,8 @@
 package entity
 
 type Ingredient struct {
-	ID     string `json:"id"`
-	Name   string `json:"name"`
-	Weight uint   `json:"weight"`
+	ID         string       `json:"id"`
+	Name       string       `json:"name"`
+	Nutritions []*Nutrition `json:"nutritions"`
+	Weight     uint         `json:"weight"`
 }

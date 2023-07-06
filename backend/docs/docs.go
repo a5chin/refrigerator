@@ -182,6 +182,12 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "nutritions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Nutrition"
+                    }
+                },
                 "weight": {
                     "type": "integer"
                 }
