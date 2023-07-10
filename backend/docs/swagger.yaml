@@ -24,6 +24,10 @@ definitions:
         type: string
       name:
         type: string
+      nutritions:
+        items:
+          $ref: '#/definitions/entity.Nutrition'
+        type: array
       weight:
         type: integer
     type: object

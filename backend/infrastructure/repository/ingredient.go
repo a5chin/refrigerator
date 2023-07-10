@@ -27,7 +27,7 @@ func (r IngredientRepository) GetIngredients(ctx context.Context, min, max *uint
 	if max != nil {
 		db = db.Where(fmt.Sprintf("weight <= %d", *max))
 	}
-	if err := db.Find(&records).Error; err != nil {
+	if err := db.Preload("Nutritions").Find(&records).Error; err != nil {
 		return nil, err
 	}
 	var ingredients []*entity.Ingredient
