@@ -1,0 +1,128 @@
+definitions:
+  controller.GetIngredientsResponse:
+    properties:
+      ingredients:
+        items:
+          $ref: '#/definitions/entity.Ingredient'
+        type: array
+    type: object
+  controller.GetNutritionsResponse:
+    properties:
+      nutritions:
+        items:
+          $ref: '#/definitions/entity.Nutrition'
+        type: array
+    type: object
+  entity.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  entity.Ingredient:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      nutritions:
+        items:
+          $ref: '#/definitions/entity.Nutrition'
+        type: array
+      weight:
+        type: integer
+    type: object
+  entity.Nutrition:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: ref
+  title: ref
+  version: "1.0"
+paths:
+  /ingredients:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: min
+        in: query
+        name: min
+        type: integer
+      - description: max
+        in: query
+        name: max
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetIngredientsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 全素材取得 API
+      tags:
+      - Ingredient
+  /nutritions:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetNutritionsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 全栄養素取得 API
+      tags:
+      - Nutrition
+  /nutritions/{nutritionId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 栄養素 ID
+        in: path
+        name: nutritionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetNutritionsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 栄養素取得 API
+      tags:
+      - Nutrition
+swagger: "2.0"
