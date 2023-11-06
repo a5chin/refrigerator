@@ -4,4 +4,5 @@ RUN mkdir /go/src/ref
 WORKDIR /go/src/ref
 
 RUN go install github.com/cosmtrek/air@v1.43.0 \
-    && go install github.com/swaggo/swag/cmd/swag@latest
+    && go install github.com/swaggo/swag/cmd/swag@latest \
+    && go install github.com/golang/mock/mockgen@latest
