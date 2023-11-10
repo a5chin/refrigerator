@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ main, develop ]
 
-env:
-  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-  GCP_LOCATION: ${{ secrets.GCP_LOCATION }}
-
 jobs:
   build:
 
@@ -19,12 +15,13 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: GCP Authenticate
-        uses: google-github-actions/setup-gcloud@v1
+      - name: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          version: '273.0.0'
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Configure docker to use the gcloud cli
         run: gcloud auth configure-docker --quiet
