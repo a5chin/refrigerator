@@ -32,4 +32,6 @@ jobs:
       - name: Build a backend docker image
         run: |
           cd ./backend/
-          docker build --tag ref:latest .
+          docker build --tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:staging .
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:staging
+
