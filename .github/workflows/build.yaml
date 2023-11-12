@@ -26,8 +26,10 @@ jobs:
       - name: Configure docker to use the gcloud cli
         run: gcloud auth configure-docker --quiet
 
-      - name: Build a docker image
-        run: docker-compose up
+      - name: Build a db docker image
+        run: docker-compose build db
 
-      - name: Access endpoint
-        run: curl -X 'GET' 'localhost:8080/api/v1/ingredients'
+      - name: Build a backend docker image
+        run: |
+          cd ./backend/
+          docker build --tag ref:latest .
