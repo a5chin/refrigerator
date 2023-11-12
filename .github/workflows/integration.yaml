@@ -1,0 +1,32 @@
+name: integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Make .env file
+        run: |
+          cat <<EOF > ./backend/config/.env
+          HOSTNAME="{{ secrets.HOSTNAME }}"
+          PORT="{{ secrets.PORT }}"
+          DB_HOSTNAME="{{ secrets.DB_HOSTNAME }}"
+          DB_USER="{{ secrets.DB_USER }}"
+          DB_PWD="{{ secrets.DB_PWD }}"
+          DB_NAME="{{ secrets.DB_NAME }}"
+          DB_PORT="{{ secrets.DB_PORT }}"
+          EOF
+
+      - name: Docker Compose Up
+        run: docker-compose up -d
+
+      - name: Access Endpoint
+        run: curl -X 'GET' '{{ secrets.HOSTNAME }}:8080/api/v1/ingredients'
