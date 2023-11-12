@@ -24,10 +24,7 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: Configure docker to use the gcloud cli
-        run: gcloud auth configure-docker --quiet
-
-      - name: Build a db docker image
-        run: docker-compose build db
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build a backend docker image
         run: |
