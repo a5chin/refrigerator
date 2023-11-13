@@ -48,6 +48,7 @@ func main() {
 
 	ingredientRouter := api.Group("/ingredients")
 	ingredientRouter.GET("", handleResponse(ingredientController.GetIngredients))
+	ingredientRouter.GET("/:ingredientId", handleResponse(ingredientController.GetIngredientByID))
 	ingredientRouter.PUT("/:ingredientId", handleResponse(ingredientController.UpdateIngredients))
 
 	nutritionRouter := api.Group("/nutritions")
