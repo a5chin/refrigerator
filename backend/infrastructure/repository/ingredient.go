@@ -40,6 +40,19 @@ func (r IngredientRepository) GetIngredients(ctx context.Context, min, max *uint
 	return ingredients, nil
 }
 
+func (r IngredientRepository) GetIngredientByID(ctx context.Context, ingredientId string) (*entity.Ingredient, error) {
+	var record *model.Ingredient
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.Preload("Nutritions").First(&record, "id = ?", ingredientId).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, entity.WrapError(http.StatusNotFound, err)
+		}
+		return nil, err
+	}
+
+	return record.ToEntity(), nil
+}
+
 func (r IngredientRepository) UpdateIngredients(ctx context.Context, ingredientId string, weight uint) error {
 	var record *model.Ingredient
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
