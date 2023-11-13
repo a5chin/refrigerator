@@ -15,20 +15,8 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: 'auth'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-
-      - name: Configure docker to use the gcloud cli
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
-
       - name: Build a backend docker image
         run: |
           cd ./backend/
-          docker build --tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:staging .
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:staging
+          docker build --tag ref:staging .
 

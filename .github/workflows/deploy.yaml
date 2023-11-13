@@ -1,0 +1,34 @@
+name: "Deploy"
+
+on:
+  issue_comment:
+    types: [ created, edited ]
+
+jobs:
+  CloudRun:
+    name: "Get Comments"
+    if: contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, 'gcloud run deploy')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: Configure docker to use the gcloud cli
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Push latest Image
+        run: |
+          cd ./backend/
+          gcloud builds submit --tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:latest .
+
+      - name: Deploy latest Image
+        run: gcloud run deploy ref-dev --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:latest
