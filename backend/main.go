@@ -58,15 +58,17 @@ func main() {
 }
 
 func runApp(app *gin.Engine, conf *config.Config) {
-	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", conf.Port)
-	docs.SwaggerInfo.BasePath = "/api/v1"
-	docs.SwaggerInfo.Schemes = []string{"http"}
+	if config.ExistEnvFile() {
+		docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", conf.PORT)
+		docs.SwaggerInfo.BasePath = "/api/v1"
+		docs.SwaggerInfo.Schemes = []string{"http"}
 
-	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	app.Run(fmt.Sprintf("%s:%d", conf.Hostname, conf.Port))
+		app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	log.Println(fmt.Sprintf("http://localhost:%d", conf.Port))
-	log.Println(fmt.Sprintf("http://localhost:%d/swagger/index.html", conf.Port))
+		log.Println(fmt.Sprintf("http://localhost:%s", conf.PORT))
+		log.Println(fmt.Sprintf("http://localhost:%s/swagger/index.html", conf.PORT))
+	}
+	app.Run(fmt.Sprintf("%s:%s", conf.HOSTNAME, conf.PORT))
 }
 
 func handleResponse(f func(ctx *gin.Context) (interface{}, error)) gin.HandlerFunc {
