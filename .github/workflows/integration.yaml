@@ -1,4 +1,4 @@
-name: integration
+name: Integration
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  testing:
+  compose-up:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
