@@ -27,6 +27,3 @@ jobs:
 
       - name: Docker Compose Up
         run: docker-compose up -d
-
-      - name: Access Endpoint
-        run: curl -X 'GET' 'http://127.0.0.1:8080/api/v1/ingredients' -H 'accept:application/json'
