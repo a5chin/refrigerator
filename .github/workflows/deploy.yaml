@@ -1,34 +1,26 @@
-name: "Deploy"
-
 on:
   issue_comment:
-    types: [ created, edited ]
-
+    types:
+      - created
 jobs:
-  CloudRun:
-    name: "Get Comments"
-    if: contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, 'gcloud run deploy')
+  check-comment:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
-
-      - name: 'auth'
-        uses: 'google-github-actions/auth@v1'
+      - name: Check for specific comment
+        id: check-comment
+        uses: actions/github-script@v5
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-
-      - name: Configure docker to use the gcloud cli
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
-
-      - name: Push latest Image
+          script: |
+            const containsTriggerComment = /your_trigger_comment_regex/.test(context.payload.comment.body);
+            if (containsTriggerComment) {
+              console.log('Trigger comment found!');
+              core.setOutput('triggered', 'true');
+            } else {
+              console.log('Trigger comment not found.');
+              core.setOutput('triggered', 'false');
+            }
+      - name: Execute command if triggered
+        if: steps.check-comment.outputs.triggered == 'true'
         run: |
-          cd ./backend/
-          gcloud builds submit --tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:latest .
-
-      - name: Deploy latest Image
-        run: gcloud run deploy ref-dev --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-repo/ref:latest
+          # Your command to execute goes here
+          echo "Running your command"
