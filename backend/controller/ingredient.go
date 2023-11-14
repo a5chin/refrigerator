@@ -51,7 +51,7 @@ func (c IngredientController) GetIngredients(ctx *gin.Context) (interface{}, err
 	}
 	ingredients, err := c.IngredientUseCase.GetIngredients(ctx, query.Min, query.Max)
 	if err != nil {
-		return nil, err
+		return nil, entity.WrapError(http.StatusInternalServerError, err)
 	}
 	return GetIngredientsResponse{Ingredients: ingredients}, nil
 }
@@ -76,7 +76,7 @@ func (c IngredientController) GetIngredientByID(ctx *gin.Context) (interface{}, 
 	ingredientId := ctx.Param("ingredientId")
 	ingredient, err := c.IngredientUseCase.GetIngredientByID(ctx, ingredientId)
 	if err != nil {
-		return nil, err
+		return nil, entity.WrapError(http.StatusInternalServerError, err)
 	}
 	return GetIngredientByIDResponse{Ingredient: ingredient}, nil
 }
