@@ -1,26 +1,28 @@
+name: "Deploy on Comment"
+
 on:
   issue_comment:
-    types:
-      - created
+    types: [ created ]
+
 jobs:
-  check-comment:
+  deploy:
     runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     steps:
-      - name: Check for specific comment
-        id: check-comment
-        uses: actions/github-script@v5
+      # ... other steps to deploy the code
+      - name: Add comment to PR
+        uses: actions/github-script@v6
+        if: always()
         with:
           script: |
-            const containsTriggerComment = /your_trigger_comment_regex/.test(context.payload.comment.body);
-            if (containsTriggerComment) {
-              console.log('Trigger comment found!');
-              core.setOutput('triggered', 'true');
-            } else {
-              console.log('Trigger comment not found.');
-              core.setOutput('triggered', 'false');
-            }
-      - name: Execute command if triggered
-        if: steps.check-comment.outputs.triggered == 'true'
-        run: |
-          # Your command to execute goes here
-          echo "Running your command"
+            const name = '${{ github.workflow   }}';
+            const url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}';
+            const success = '${{ job.status }}' === 'success';
+            const body = `${name}: ${success ? 'succeeded ✅' : 'failed ❌'}\n${url}`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            })
