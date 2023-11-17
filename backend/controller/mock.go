@@ -49,6 +49,21 @@ func (mr *MockIngredientUseCaseMockRecorder) GetIngredients(ctx, min, max interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetIngredients", reflect.TypeOf((*MockIngredientUseCase)(nil).GetIngredients), ctx, min, max)
 }
 
+// GetIngredientByID mocks base method
+func (m *MockIngredientUseCase) GetIngredientByID(ctx context.Context, ingredientId string) (*entity.Ingredient, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetIngredientByID", ctx, ingredientId)
+	ret0, _ := ret[0].(*entity.Ingredient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetIngredientByID indicates an expected call of GetIngredientByID
+func (mr *MockIngredientUseCaseMockRecorder) GetIngredientByID(ctx, ingredientId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetIngredientByID", reflect.TypeOf((*MockIngredientUseCase)(nil).GetIngredientByID), ctx, ingredientId)
+}
+
 // UpdateIngredients mocks base method
 func (m *MockIngredientUseCase) UpdateIngredients(ctx context.Context, ingredientId string, weight uint) error {
 	m.ctrl.T.Helper()

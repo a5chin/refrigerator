@@ -51,9 +51,34 @@ func (c IngredientController) GetIngredients(ctx *gin.Context) (interface{}, err
 	}
 	ingredients, err := c.IngredientUseCase.GetIngredients(ctx, query.Min, query.Max)
 	if err != nil {
-		return nil, err
+		return nil, entity.WrapError(http.StatusInternalServerError, err)
 	}
 	return GetIngredientsResponse{Ingredients: ingredients}, nil
+}
+
+type GetIngredientByIDResponse struct {
+	Ingredient *entity.Ingredient `json:"ingredient"`
+}
+
+// GetIngredientByID godoc
+//
+// @Summary	素材取得 API
+// @Description
+// @Tags		Ingredient
+// @Accept		json
+// @Produce		json
+// @Param		ingredientId	path		string	true			"素材 ID"
+// @Success		200				"OK"		GetIngredientByIDResponse
+// @Failure		401				{object}	entity.ErrorResponse
+// @Failure		404				{object}	entity.ErrorResponse
+// @Router		/ingredients/{ingredientId}	[get]
+func (c IngredientController) GetIngredientByID(ctx *gin.Context) (interface{}, error) {
+	ingredientId := ctx.Param("ingredientId")
+	ingredient, err := c.IngredientUseCase.GetIngredientByID(ctx, ingredientId)
+	if err != nil {
+		return nil, entity.WrapError(http.StatusInternalServerError, err)
+	}
+	return GetIngredientByIDResponse{Ingredient: ingredient}, nil
 }
 
 type UpdateIngredientsQuery struct {

@@ -56,6 +56,44 @@
             }
         },
         "/ingredients/{ingredientId}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "素材取得 API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "素材 ID",
+                        "name": "ingredientId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "put": {
                 "consumes": [
                     "application/json"

@@ -49,6 +49,21 @@ func (mr *MockIngredientRepositoryMockRecorder) GetIngredients(ctx, min, max int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetIngredients", reflect.TypeOf((*MockIngredientRepository)(nil).GetIngredients), ctx, min, max)
 }
 
+// GetIngredientByID mocks base method
+func (m *MockIngredientRepository) GetIngredientByID(ctx context.Context, ingredientId string) (*entity.Ingredient, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetIngredientByID", ctx, ingredientId)
+	ret0, _ := ret[0].(*entity.Ingredient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetIngredientByID indicates an expected call of GetIngredientByID
+func (mr *MockIngredientRepositoryMockRecorder) GetIngredientByID(ctx, ingredientId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetIngredientByID", reflect.TypeOf((*MockIngredientRepository)(nil).GetIngredientByID), ctx, ingredientId)
+}
+
 // UpdateIngredients mocks base method
 func (m *MockIngredientRepository) UpdateIngredients(ctx context.Context, ingredientId string, weight uint) error {
 	m.ctrl.T.Helper()
