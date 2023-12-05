@@ -75,6 +75,61 @@ paths:
       summary: 全素材取得 API
       tags:
       - Ingredient
+  /ingredients/{ingredientId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 素材 ID
+        in: path
+        name: ingredientId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 素材取得 API
+      tags:
+      - Ingredient
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 素材 ID
+        in: path
+        name: ingredientId
+        required: true
+        type: string
+      - description: 重さ
+        in: query
+        name: weight
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 素材更新 API
+      tags:
+      - Ingredient
   /nutritions:
     get:
       consumes:

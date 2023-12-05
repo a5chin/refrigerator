@@ -2,11 +2,14 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"net/http"
 	"ref/entity"
 	"ref/infrastructure/driver"
 	"ref/infrastructure/repository/model"
 
+	"github.com/go-sql-driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -35,4 +38,34 @@ func (r IngredientRepository) GetIngredients(ctx context.Context, min, max *uint
 		ingredients = append(ingredients, record.ToEntity())
 	}
 	return ingredients, nil
+}
+
+func (r IngredientRepository) GetIngredientByID(ctx context.Context, ingredientId string) (*entity.Ingredient, error) {
+	var record *model.Ingredient
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.Preload("Nutritions").First(&record, "id = ?", ingredientId).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, entity.WrapError(http.StatusNotFound, err)
+		}
+		return nil, err
+	}
+
+	return record.ToEntity(), nil
+}
+
+func (r IngredientRepository) UpdateIngredients(ctx context.Context, ingredientId string, weight uint) error {
+	var record *model.Ingredient
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.First(&record, "id = ?", ingredientId).Error; err != nil {
+		return err
+	}
+	record.Weight = weight
+	if err := db.Save(record).Error; err != nil {
+		var mysqlErr *mysql.MySQLError
+		if errors.As(err, &mysqlErr) && mysqlErr.Number == driver.ErrDuplicateEntryNumber {
+			return entity.WrapError(http.StatusConflict, err)
+		}
+		return err
+	}
+	return nil
 }

@@ -1,6 +1,7 @@
 package driver
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 	"ref/config"
@@ -13,19 +14,36 @@ const TxKey = "transactionObject"
 const ErrDuplicateEntryNumber = 1062
 
 func NewDB(conf *config.Config) *gorm.DB {
-	host := conf.DB.Hostname
-	port := conf.DB.Port
-	dbname := conf.DB.Name
-	username := conf.DB.Username
-	if conf.DB.Password != "" {
-		username += ":" + conf.DB.Password
+	var dialector gorm.Dialector
+	dbUser := conf.DB_USER
+	dbPwd := conf.DB_PWD
+	dbName := conf.DB_NAME
+	dbPort := conf.DB_PORT
+	if config.ExistEnvFile() {
+		dbHostName := conf.DB_HOSTNAME
+		if dbPwd != "" {
+			dbUser += ":" + dbPwd
+		}
+		dsn := fmt.Sprintf(
+			"%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			dbUser, dbHostName, dbPort, dbName,
+		)
+		dialector = mysql.Open(dsn)
+	} else {
+		dbTCPHost := conf.DB_TCPHOST
+		dbURI := fmt.Sprintf(
+			"%s:%s@tcp(%s:%s)/%s?parseTime=true",
+			dbUser, dbPwd, dbTCPHost, dbPort, dbName,
+		)
+		sqlDB, _ := sql.Open("mysql", dbURI)
+		dialector = mysql.New(mysql.Config{Conn: sqlDB})
 	}
-	dsn := fmt.Sprintf("%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, host, port, dbname)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(
+		dialector, &gorm.Config{},
+	)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	db = db.Debug()
 	return db
 }

@@ -8,7 +8,25 @@
     - mysql: 8.0.28
 
 ## How to develop
+### Copy .env.example as .env
+```sh
+cp backend/config/.env.example backend/config/.env
+```
+
+### Copy this to backend/config/.env.env
+```sh
+# .env
+HOSTNAME="127.0.0.1"
+PORT="8080"
+DB_HOSTNAME="db"
+DB_USER="root"
+DB_PWD=""
+DB_NAME="contents"
+DB_PORT="3306"
+```
+
+### Run backend
 ```sh
 $ docker-compose up
 ```
-- backend: http://localhost:9000
+- backend: http://localhost:8080
