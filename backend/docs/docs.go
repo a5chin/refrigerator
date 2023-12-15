@@ -87,7 +87,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GetIngredientByIDResponse"
+                        }
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -227,6 +230,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.GetIngredientByIDResponse": {
+            "type": "object",
+            "properties": {
+                "ingredient": {
+                    "$ref": "#/definitions/entity.Ingredient"
+                }
+            }
+        },
         "controller.GetIngredientsResponse": {
             "type": "object",
             "properties": {

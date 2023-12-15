@@ -68,7 +68,7 @@ type GetIngredientByIDResponse struct {
 // @Accept		json
 // @Produce		json
 // @Param		ingredientId	path		string	true			"素材 ID"
-// @Success		200				"OK"		GetIngredientByIDResponse
+// @Success		200				{object}	GetIngredientByIDResponse
 // @Failure		401				{object}	entity.ErrorResponse
 // @Failure		404				{object}	entity.ErrorResponse
 // @Router		/ingredients/{ingredientId}	[get]

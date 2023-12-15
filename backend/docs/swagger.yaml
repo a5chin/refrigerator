@@ -1,4 +1,9 @@
 definitions:
+  controller.GetIngredientByIDResponse:
+    properties:
+      ingredient:
+        $ref: '#/definitions/entity.Ingredient'
+    type: object
   controller.GetIngredientsResponse:
     properties:
       ingredients:
@@ -90,6 +95,8 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/controller.GetIngredientByIDResponse'
         "401":
           description: Unauthorized
           schema:
