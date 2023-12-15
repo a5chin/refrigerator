@@ -1,4 +1,4 @@
-FROM mysql:8.0.28
+FROM mysql:8.0.28-debian
 
 RUN apt-get update && apt-get install -y locales
 RUN sed -i -E 's/# (ja\_JP.UTF-8 UTF-8)/\1/' /etc/locale.gen && locale-gen
